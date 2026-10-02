@@ -1,0 +1,125 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Plus Jakarta Sans",sans-serif}
+body{width:1600px;height:900px;background:
+  radial-gradient(1200px 700px at 80% -10%,rgba(216,185,114,.10),transparent 60%),#080B14;
+  color:#F4F6FC;padding:44px 54px;position:relative}
+body::after{content:"";position:absolute;inset:0;opacity:.03;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+h1{font-family:"Fraunces",serif;font-weight:600;font-size:34px;letter-spacing:-.02em}
+.sub{color:#A6B0CC;font-size:15px;font-weight:600;margin-top:5px}
+.aws{position:absolute;top:44px;right:54px;font-size:13px;font-weight:700;color:#D8B972;
+  border:1px solid rgba(216,185,114,.35);background:rgba(216,185,114,.1);border-radius:999px;padding:8px 16px}
+
+.canvas{margin-top:34px;display:flex;align-items:stretch;gap:0;height:640px}
+
+/* actor */
+.actor{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;width:150px}
+.actor .av{width:72px;height:72px;border-radius:50%;background:#10172B;border:1.5px solid #D8B972;display:grid;place-items:center}
+.actor .cap{font-size:14px;font-weight:700;text-align:center}
+.actor .cap small{display:block;color:#6B779A;font-weight:600;font-size:11.5px;margin-top:3px}
+
+/* account boundary */
+.cloud{flex:1;margin-left:30px;border:1.5px dashed rgba(226,232,255,.28);border-radius:20px;padding:22px 24px;position:relative}
+.cloud .label{position:absolute;top:-13px;left:22px;background:#080B14;padding:0 12px;font-size:12.5px;font-weight:800;
+  letter-spacing:.08em;color:#A6B0CC;text-transform:uppercase}
+.cloud .region{position:absolute;top:-13px;right:22px;background:#080B14;padding:0 12px;font-size:11.5px;font-weight:700;color:#6B779A}
+
+.lanes{display:flex;flex-direction:column;gap:20px;height:100%}
+.lane{flex:1;border:1px solid rgba(226,232,255,.1);border-radius:14px;padding:16px 18px;position:relative;
+  display:flex;align-items:center;gap:16px;background:rgba(16,23,43,.5)}
+.lane .lane-tag{position:absolute;top:-10px;left:16px;font-size:10.5px;font-weight:800;letter-spacing:.07em;
+  padding:3px 10px;border-radius:999px;text-transform:uppercase}
+.lane.serve .lane-tag{background:#14323a;color:#5eead4;border:1px solid rgba(94,234,212,.4)}
+.lane.api .lane-tag{background:#2a2208;color:#D8B972;border:1px solid rgba(216,185,114,.4)}
+
+/* service node */
+.svc{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:112px;text-align:center}
+.svc .ico{width:58px;height:58px;border-radius:13px;display:grid;place-items:center;font-size:12px;font-weight:800;
+  color:#fff;box-shadow:0 8px 20px -10px rgba(0,0,0,.8)}
+.svc .nm{font-size:12.5px;font-weight:700;line-height:1.25}
+.svc .nm small{display:block;color:#6B779A;font-weight:600;font-size:10.5px;margin-top:2px}
+/* AWS-ish service colors */
+.c-cf{background:linear-gradient(135deg,#8C4FFF,#5a2db5)}   /* CloudFront purple */
+.c-s3{background:linear-gradient(135deg,#4a9e3f,#2f6b28)}   /* S3 green */
+.c-lam{background:linear-gradient(135deg,#ED7100,#b35600)}  /* Lambda orange */
+.c-tex{background:linear-gradient(135deg,#5A30B5,#3f2080)}  /* Textract (ML) purple */
+.c-bed{background:linear-gradient(135deg,#01A88D,#017a66)}  /* Bedrock teal */
+.c-iam{background:linear-gradient(135deg,#DD344C,#a52438)}  /* IAM red */
+.c-cdk{background:linear-gradient(135deg,#C925D1,#8f1a95)}  /* CDK magenta */
+
+.arrow{color:#D8B972;font-size:26px;font-weight:800;align-self:center;padding:0 2px}
+.arrow small{display:block;font-size:9.5px;color:#6B779A;font-weight:700;text-align:center;letter-spacing:.03em;margin-top:-4px}
+
+/* footer strip */
+.foot{position:absolute;bottom:30px;left:54px;right:54px;display:flex;justify-content:space-between;align-items:center;
+  font-size:12.5px;color:#6B779A;font-weight:600;border-top:1px solid rgba(226,232,255,.1);padding-top:16px}
+.foot b{color:#D8B972}
+.pipeline{display:flex;align-items:center;gap:10px}
+.pipeline .p{display:flex;align-items:center;gap:7px;color:#A6B0CC;font-weight:700;font-size:12px}
+</style></head><body>
+  <h1>DueDate - AWS architecture</h1>
+  <div class="sub">From a pasted eviction notice to a cited, grounded answer. Serverless, read-only, scales to zero.</div>
+  <div class="aws">Region: us-east-1</div>
+
+  <div class="canvas">
+    <!-- actor -->
+    <div class="actor">
+      <div class="av"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D8B972" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+      <div class="cap">Tenant<small>browser · HTTPS<br>no login</small></div>
+    </div>
+
+    <!-- AWS account boundary -->
+    <div class="cloud">
+      <span class="label">AWS Account</span>
+      <span class="region">Infrastructure as code: AWS CDK</span>
+      <div class="lanes">
+
+        <!-- serve path -->
+        <div class="lane serve">
+          <span class="lane-tag">Serve the page</span>
+          <div class="svc"><div class="ico c-cf">CF</div><div class="nm">Amazon CloudFront<small>CDN · HTTPS · OAC</small></div></div>
+          <span class="arrow">&rsaquo;<small>reads</small></span>
+          <div class="svc"><div class="ico c-s3">S3</div><div class="nm">Amazon S3<small>static site (private)</small></div></div>
+          <span class="arrow" style="margin-left:auto">&rsaquo;</span>
+          <div class="svc"><div class="ico c-cdk" style="width:46px;height:46px;font-size:11px">CDK</div><div class="nm">AWS CDK<small>deploys it all</small></div></div>
+        </div>
+
+        <!-- api path -->
+        <div class="lane api">
+          <span class="lane-tag">Analyze the notice (POST /)</span>
+          <div class="svc"><div class="ico c-lam">&lambda;</div><div class="nm">Lambda Function URL<small>Python 3.12 · CORS</small></div></div>
+          <span class="arrow">&rsaquo;<small>1 extract</small></span>
+          <div class="svc"><div class="ico c-tex">TXT</div><div class="nm">Amazon Textract<small>lines + confidence</small></div></div>
+          <span class="arrow">&rsaquo;<small>2 analyze</small></span>
+          <div class="svc"><div class="ico" style="background:linear-gradient(135deg,#1b2440,#10172b);border:1px solid #D8B972;color:#D8B972">RULE</div><div class="nm">Deterministic engine<small>facts = code</small></div></div>
+          <span class="arrow">&rsaquo;<small>3 narrate</small></span>
+          <div class="svc"><div class="ico c-bed">BR</div><div class="nm">Amazon Bedrock<small>Nova Lite · guardrailed</small></div></div>
+        </div>
+
+        <!-- supporting -->
+        <div class="lane serve" style="flex:0 0 auto;padding:14px 18px">
+          <span class="lane-tag">Guardrails and storage</span>
+          <div class="svc"><div class="ico c-iam" style="width:46px;height:46px">IAM</div><div class="nm">IAM (least privilege)<small>Textract + Bedrock only</small></div></div>
+          <span class="arrow" style="opacity:.4">·</span>
+          <div class="svc"><div class="ico c-s3" style="width:46px;height:46px">S3</div><div class="nm">S3 uploads<small>24h TTL, auto-delete</small></div></div>
+          <span class="arrow" style="opacity:.4">·</span>
+          <div class="svc"><div class="ico" style="width:46px;height:46px;background:linear-gradient(135deg,#1b2440,#10172b);border:1px solid rgba(226,232,255,.2);color:#A6B0CC">AID</div><div class="nm">Free legal-aid directory<small>routed by state</small></div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="pipeline">
+      <span class="p">Response:</span>
+      <span class="p" style="color:#D8B972">cited facts</span>·
+      <span class="p">plain-language summary</span>·
+      <span class="p">dated checklist</span>·
+      <span class="p">free help</span>
+    </div>
+    <div><b>Built with Kiro</b> + AWS MCP · read-only · not legal advice</div>
+  </div>
+</body></html>

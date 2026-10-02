@@ -144,6 +144,10 @@ the user (or a lawyer) can check the arithmetic.
 
 ## 🏛️ Architecture in Detail
 
+<div align="center">
+<img src="docs/aws-architecture.png" alt="DueDate AWS architecture: a tenant browser over HTTPS with no login reaches an AWS account in us-east-1. Serve-the-page lane: Amazon CloudFront (HTTPS, OAC) reads a private Amazon S3 static site, all deployed by AWS CDK. Analyze lane (POST /): a Lambda Function URL calls (1) Amazon Textract to extract lines, (2) a deterministic engine where facts are code, (3) Amazon Bedrock Nova Lite guardrailed for narration. Guardrails and storage: least-privilege IAM for Textract and Bedrock only, an S3 uploads bucket with 24h TTL, and a free legal-aid directory routed by state. The response carries cited facts, a plain-language summary, a dated checklist, and free help." width="100%"/>
+</div>
+
 DueDate is a two-tier serverless app. The browser only ever talks to CloudFront; the Lambda
 Function URL is the only compute. Nothing is a long-running server, so it costs near zero at
 idle and scales to zero.
@@ -284,7 +288,8 @@ duedate/
 ├── samples/
 │   └── pay_or_quit_ca.txt   # a realistic California 3-day notice for the demo
 ├── docs/
-│   ├── architecture.png     # the How It Works diagram
+│   ├── aws-architecture.png # the AWS high-level architecture diagram
+│   ├── architecture.png     # the conceptual How It Works diagram
 │   ├── architecture.html    # diagram source (Playwright-rendered)
 │   ├── proof.md             # proof the coding agent connected to AWS + the deploy
 │   └── screenshots/         # live-app screenshots used in this README
