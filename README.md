@@ -17,6 +17,12 @@
 
 </div>
 
+<div align="center">
+<img src="docs/screenshots/01-hero.png" alt="DueDate landing page: a deep navy screen with the headline Know the one date you cannot miss, an intro paragraph, three trust pills (No account, Every answer cited, Not legal advice), and a gold Check my notice button" width="100%"/>
+<br/>
+<em>The live app. Paste a notice, get the one deadline, cited to your own paper.</em>
+</div>
+
 > [!IMPORTANT]
 > **DueDate is not legal advice and not a lawyer.** It explains what your notice says, cites
 > the exact line it read, and points you to real free legal aid. It never tells you a right
@@ -83,6 +89,116 @@ The whole trust story is one idea: **the model is never allowed to decide a fact
 `Extract` and `Analyze` run with zero model freedom. `Narrate` is the only generative step,
 and it is fenced in on both sides: constrained to the facts going in, filtered for citations
 coming out.
+
+<div align="center">
+<img src="docs/screenshots/02-result.png" alt="DueDate result: a gold deadline card reading Friday, January 9, 2026, with the line You have until January 9, 2026 to pay $2,450.00 to stop the eviction, and a Computed, 3 days from the notice date 2026-01-06 chip" width="100%"/>
+</div>
+
+---
+
+## 🏛️ Architecture in detail
+
+DueDate is a two-tier serverless app on AWS. The browser only ever talks to CloudFront;
+the Lambda Function URL is the only compute. Nothing is a long-running server, so it costs
+near zero at idle and scales to zero.
+
+### The request path, end to end
+
+```
+Browser (CloudFront, static HTML + JS)
+   |
+   |  POST { text | s3 | image_b64, language, state }   (HTTPS, no auth)
+   v
+Lambda Function URL  --->  handler.py
+   |
+   |  1. extract.py      Textract DetectDocumentText    -> Line[] (id, text, confidence)
+   |  2. engine.py       rules only, no model           -> facts[] each with cites[]
+   |  3. (detect state from the address text)
+   |  4. aid.py          pick real free legal-aid links  -> resources[]
+   |  5. narrate.py      Bedrock Nova Lite, guardrailed  -> grounded summary/checklist/rights
+   v
+JSON response  { notice_type, facts[], missing[], resources[], narration, lines[], disclaimer }
+```
+
+### Components and why each one is there
+
+| Component | Service | Role |
+|-----------|---------|------|
+| Static front end | Amazon S3 (private) + Amazon CloudFront (OAC) | Serves one HTML page over HTTPS. No login wall, so an automated scorer and a judge can reach the full experience in one click. S3 is blocked from public access; only CloudFront can read it. |
+| API | AWS Lambda (Python 3.12) + Lambda Function URL | One function runs the whole pipeline. The Function URL gives a public HTTPS endpoint with no API Gateway needed. CORS is owned by the Function URL config (single source of truth). |
+| Document read | Amazon Textract (`DetectDocumentText`) | Returns each `LINE` block with text, a bounding box, and a confidence score. The line ids become the citation anchors every answer links back to. |
+| Deterministic engine | Plain Python (`engine.py`) | Classifies the notice type, extracts amounts and dates, and computes a deadline from a day-count using a stated rule. No model involved, so a date can never be hallucinated. |
+| Narration | Amazon Bedrock, Amazon Nova Lite (`us.amazon.nova-2-lite-v1:0`) | Translates and simplifies the deterministic facts into the chosen language and reading level. Guardrailed: it only receives the facts, and any claim it returns without a fact id is dropped. |
+| Legal-aid routing | Static data (`aid.py`) | Real national entry points (LawHelp.org, Legal Services Corporation, 211) plus per-state hooks, chosen by the state detected from the address. |
+| Uploads | Amazon S3 (24h lifecycle TTL) | For the image/PDF upload path. Documents auto-delete within a day. |
+| Infrastructure | AWS CDK (Python) | One stack defines everything. `cdk deploy` prints the live Site URL and API URL. |
+
+### The data contract (what the API returns)
+
+Every answer is a `Fact`, and every `Fact` either cites a line of the user's own notice or
+is marked absent. This is the shape the front end renders and the tests assert against:
+
+```json
+{
+  "notice_type": "pay_or_quit",
+  "notice_type_label": "Pay Rent or Quit (nonpayment of rent)",
+  "facts": [
+    { "key": "notice_type", "value": "pay_or_quit", "cites": ["L1","L4","L6"] },
+    { "key": "amount_due",  "value": "$2,450.00",  "cites": ["L5"] },
+    { "key": "deadline",    "value": "2026-01-09",  "cites": ["L6","L8"],
+      "computed": true, "rule": "3 days from the notice date 2026-01-06" }
+  ],
+  "missing": [],
+  "state": "CA",
+  "resources": [ { "name": "California Courts Self-Help - Eviction", "url": "..." } ],
+  "narration": {
+    "summary": "You have until January 9, 2026 to pay $2,450.00 to stop the eviction.",
+    "checklist": [ { "text": "Pay $2,450.00 before the deadline.", "cite": ["amount_due","deadline"] } ],
+    "rights":    [ { "text": "You can stop the eviction by paying the full rent owed.", "cite": ["notice_type"] } ],
+    "grounded": true
+  },
+  "lines": [ { "id": "L1", "text": "THREE-DAY NOTICE TO PAY RENT OR QUIT", "confidence": 99.4 } ],
+  "disclaimer": "DueDate explains your notice and points you to free help. It is not legal advice."
+}
+```
+
+### How the deadline is computed (worked example)
+
+The sample notice says "within THREE (3) days" and "dated January 6, 2026". The engine does
+not ask the model for a date. It:
+1. Reads the day-count `3` from the line that contains it (cited).
+2. Reads the notice date `2026-01-06` from the "dated" line (cited).
+3. Adds 3 calendar days (the notice did not say business days) and labels the result
+   `computed`, exposing the rule on screen: `3 days from the notice date 2026-01-06`.
+
+If either input is missing, it does **not** guess. It reports the day-count alone, or says
+the notice has no clear deadline, and routes the user to free help.
+
+### Security and privacy
+
+- **Read-only to the user.** The app never writes to or changes anything in the tenant's world.
+- **Least-privilege IAM.** The API Lambda holds only `textract:DetectDocumentText` /
+  `AnalyzeDocument` and `bedrock:InvokeModel` / `InvokeModelWithResponseStream`, plus read on
+  its own uploads bucket. Nothing else.
+- **No account, no tracking.** There is no login and no analytics on the critical path.
+- **Short retention.** Uploaded files live in an S3 bucket with a 24 hour lifecycle expiry.
+- **Private origin.** The site bucket blocks all public access; CloudFront reads it through
+  Origin Access Control.
+
+### Cost (why it survives, cheaply, past the deadline)
+
+At idle the stack costs effectively nothing: Lambda and S3 have no idle charge, and
+CloudFront serves a tiny static page. Per analysis, the only real cost is one Textract page
+read (if an image is uploaded) and one short Amazon Nova Lite call for narration, both
+fractions of a cent. A demo running hundreds of times stays in the low cents per month.
+
+### Accessibility and the front end
+
+One page, no framework, server-reachable without JavaScript for the content. It targets WCAG
+2.1 AA: visible focus rings, keyboard operability, labelled controls, a skip link, language
+attributes that switch with the English/Spanish toggle, and a full `prefers-reduced-motion`
+path that disables the pointer-tilt and parallax. The palette ("Midnight and Champagne",
+deep navy with a single champagne-gold accent) keeps body text above 4.5:1 contrast.
 
 ---
 
