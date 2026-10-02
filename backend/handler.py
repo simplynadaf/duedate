@@ -39,14 +39,12 @@ def _detect_state(lines: list[dict]) -> str | None:
 
 
 def _cors(body: dict, status: int = 200) -> dict:
+    # CORS headers are set by the Lambda Function URL config (single source of truth).
+    # Returning them here too would duplicate Access-Control-Allow-Origin and break the
+    # browser preflight, so we only set content type.
     return {
         "statusCode": status,
-        "headers": {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Allow-Methods": "POST,OPTIONS",
-        },
+        "headers": {"Content-Type": "application/json"},
         "body": json.dumps(body, ensure_ascii=False),
     }
 

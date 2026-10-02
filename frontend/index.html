@@ -88,6 +88,7 @@
 </head>
 <body>
 <a href="#intake" class="sr-only">Skip to the notice form</a>
+<script src="config.js"></script>
 <header>
   <div class="wrap">
     <div class="top">
@@ -256,7 +257,7 @@ function render(d){
   const hero=document.getElementById('deadlineHero');
   if(dl){
     document.getElementById('deadlineVal').textContent=fmtDate(dl.value);
-    document.getElementById('deadlineSub').textContent=(d.narration&&d.narration.summary)||'';
+    document.getElementById('deadlineSub').textContent=((d.narration&&d.narration.summary)||'').replace(/\s*\[[^\]]*\]/g,'');
     const rule=document.getElementById('deadlineRule');
     if(dl.computed){rule.style.display='inline-block';rule.textContent=t('computed')+' · '+(dl.rule||'');}
     else rule.style.display='none';
