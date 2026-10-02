@@ -2,32 +2,28 @@
 
 # 📬 DueDate: Understand Your Eviction Notice Before the Deadline (2026)
 
-### Upload the eviction notice you received and get, in your language and reading level, the one date you cannot miss, exactly what to do before it, and your stated rights, with every single statement pinned to the exact line of your own notice. It never invents anything your paper does not say.
+### Paste the eviction notice you received and get, in your language, the one date you cannot miss, exactly what to do before it, and your rights - with every statement pinned to the exact line of your own notice, and a hard refuse-to-invent rule so it never tells a frightened person something their paper does not actually say.
 
 [![Live on AWS](https://img.shields.io/badge/Live%20on-AWS-0E7C5A?style=for-the-badge&logo=amazonwebservices&logoColor=white)](https://d3pjdlu332prje.cloudfront.net)
 [![Amazon Textract](https://img.shields.io/badge/Reads%20with-Amazon%20Textract-14B8A6?style=for-the-badge&logo=amazon&logoColor=white)](https://aws.amazon.com/textract/)
 [![Amazon Bedrock](https://img.shields.io/badge/Explains%20with-Amazon%20Bedrock-0F766E?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com/bedrock/)
-[![Built with Kiro](https://img.shields.io/badge/Built%20with-Kiro%20%2B%20AWS%20MCP-F59E0B?style=for-the-badge&logo=awslambda&logoColor=white)](https://kiro.dev)
+[![Built with Kiro](https://img.shields.io/badge/Built%20with-Kiro%20%2B%20AWS%20MCP-D8B972?style=for-the-badge&logo=awslambda&logoColor=black)](https://kiro.dev)
 [![IaC: AWS CDK](https://img.shields.io/badge/IaC-AWS%20CDK-115E59?style=for-the-badge)](https://aws.amazon.com/cdk/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-134E4A?style=for-the-badge)](LICENSE)
 
-[![Try the live app](https://img.shields.io/badge/%E2%96%B6%20Try%20the%20live%20app-DueDate-0E7C5A?style=for-the-badge)](https://d3pjdlu332prje.cloudfront.net)
+[![Try the live app](https://img.shields.io/badge/%E2%96%B6%20Try%20the%20live%20app-DueDate-D8B972?style=for-the-badge&logoColor=black)](https://d3pjdlu332prje.cloudfront.net)
 
 **AWS Zero to Shipped** · Category: `#social-good` · Lane: `#community`
 
-</div>
+<img src="docs/screenshots/01-hero.png" alt="DueDate landing page: deep navy screen, headline Know the one date you cannot miss, three trust pills, and a gold Check my notice button" width="100%"/>
 
-<div align="center">
-<img src="docs/screenshots/01-hero.png" alt="DueDate landing page: a deep navy screen with the headline Know the one date you cannot miss, an intro paragraph, three trust pills (No account, Every answer cited, Not legal advice), and a gold Check my notice button" width="100%"/>
-<br/>
-<em>The live app. Paste a notice, get the one deadline, cited to your own paper.</em>
 </div>
 
 > [!IMPORTANT]
 > **DueDate is not legal advice and not a lawyer.** It explains what your notice says, cites
-> the exact line it read, and points you to real free legal aid. It never tells you a right
-> or a step your notice does not actually state. If it cannot ground an answer in your paper,
-> it says so and routes you to free help. See [The Honest Take](#-the-honest-take).
+> the exact line it read, and points you to real free legal aid. It never states a right or a
+> step your notice does not actually contain. If it cannot ground an answer in your paper, it
+> says so and routes you to free help. See [The Honest Take](#-the-honest-take).
 
 ---
 
@@ -39,14 +35,17 @@ The same research shows tenants facing eviction are **more likely to have a disa
 speak a primary language other than English, and to have less access to technology.** As the
 Furman Center put it, **"half the battle is just showing up."**
 
-An eviction notice is a dense, scary legal document with one buried fact that matters most:
-a deadline. Miss it and you can lose your home. **DueDate reads that notice and makes the one
-date, the required action, and your rights impossible to miss, in plain language and in your
-own language, grounded line by line in your own paper.**
+An eviction notice is a dense, frightening legal document with one buried fact that matters
+most: a deadline. Miss it and you can lose your home.
+
+**DueDate reads that notice and makes the one date, the required action, and your rights
+impossible to miss**, in plain language and in your own language, grounded line by line in
+your own paper. It is not another chatbot that might be wrong. The facts are computed by
+code, not written by a model, so a date can never be hallucinated.
 
 ---
 
-## ✨ What It Does
+## 📬 What You Get (from one pasted notice)
 
 Paste or upload a notice. DueDate returns a calm, cited answer in seconds.
 
@@ -71,7 +70,7 @@ without touching the fact engine.
 
 ---
 
-## 🧠 How It Works: facts are code, the model only narrates
+## 🧠 How It Works - facts are code, the model only narrates
 
 <div align="center">
 <img src="docs/architecture.png" alt="Architecture: a tenant uploads an eviction notice to a CloudFront and S3 front end; the API Lambda calls Amazon Textract to extract lines with positions and confidence; a deterministic engine classifies the notice and computes the deadline, citing each line; Amazon Bedrock narrates and translates under guardrails, dropping any claim without a fact id; the response includes cited facts and real free legal-aid links" width="100%"/>
@@ -82,7 +81,7 @@ The whole trust story is one idea: **the model is never allowed to decide a fact
 | Layer | Who decides | What happens |
 |-------|-------------|--------------|
 | **Extract** | Amazon Textract | Every line of the notice is read with its position and confidence. This is the citation substrate. |
-| **Analyze** | Deterministic engine (code) | Notice type, deadline, amount, parties are found by rules. Day-counts become dates by a documented rule. Each fact cites the line it came from. The model cannot change a date. |
+| **Analyze** | Deterministic engine (code) | Notice type, deadline, amount, and parties are found by rules. Day-counts become dates by a documented rule. Each fact cites the line it came from. The model cannot change a date. |
 | **Narrate** | Amazon Bedrock, under guardrails | The model only translates and simplifies the facts it is given. Any sentence without a backing fact id is dropped before display. |
 | **Route** | Static directory | Real free legal-aid links, chosen by the detected state. |
 
@@ -90,17 +89,64 @@ The whole trust story is one idea: **the model is never allowed to decide a fact
 and it is fenced in on both sides: constrained to the facts going in, filtered for citations
 coming out.
 
+---
+
+## 📸 What it looks like (live, real)
+
+Every screenshot is a real run against the live app. The sample notice is illustrative, but
+the extraction, the computed deadline, and the citations are real.
+
+### The one deadline, with the computed rule shown
 <div align="center">
 <img src="docs/screenshots/02-result.png" alt="DueDate result: a gold deadline card reading Friday, January 9, 2026, with the line You have until January 9, 2026 to pay $2,450.00 to stop the eviction, and a Computed, 3 days from the notice date 2026-01-06 chip" width="100%"/>
 </div>
 
+### The full result: checklist, rights, the honesty panel, free help, and your cited notice
+<div align="center">
+<img src="docs/screenshots/03-full.png" alt="DueDate full result page: notice type, What to do checklist, Your rights, What your notice does NOT say panel, Free help near you links, and the notice text with cited lines highlighted" width="100%"/>
+</div>
+
 ---
 
-## 🏛️ Architecture in detail
+## 🔥 The Three Trust Beats
 
-DueDate is a two-tier serverless app on AWS. The browser only ever talks to CloudFront;
-the Lambda Function URL is the only compute. Nothing is a long-running server, so it costs
-near zero at idle and scales to zero.
+### 📎 Beat 1 - Every answer is cited to your own notice
+Click any `📎` chip and the exact line of your notice scrolls into view and highlights. No
+claim appears without a line behind it. In the API, every `Fact` carries a `cites` array of
+line ids, and the UI drops any narration sentence whose `cite` is not a real fact.
+
+### 🚫 Beat 2 - It refuses to invent
+No deadline in the paper means no deadline on screen. A day-count with no start date is
+reported honestly as "days only", never guessed into a fake date. Proven by the test suite
+(`test_R7_never_invents_a_date`, `test_R10_refuses_when_only_a_day_count`).
+
+### 🧮 Beat 3 - It computes in the open
+When the deadline is a day-count ("within 3 days"), DueDate computes the date and shows the
+rule on screen: `Computed - 3 days from the notice date 2026-01-06`. Nothing is hidden, so
+the user (or a lawyer) can check the arithmetic.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Choice |
+|-------|--------|
+| Document extraction | Amazon Textract (`DetectDocumentText`, lines + geometry + confidence) |
+| Deterministic engine | Python rules: notice-type classification, deadline math, cited facts |
+| Narration + translation | Amazon Bedrock, Amazon Nova Lite (`us.amazon.nova-2-lite-v1:0`) |
+| API | AWS Lambda (Python 3.12) + Lambda Function URL (public HTTPS, no login) |
+| Front end | Static HTML served by Amazon CloudFront over private Amazon S3 (OAC) |
+| Uploads | Amazon S3 bucket with a 24 hour lifecycle TTL |
+| IaC | AWS CDK (Python) |
+| Build | Kiro CLI connected to AWS via the Agent Toolkit and AWS MCP servers |
+
+---
+
+## 🏛️ Architecture in Detail
+
+DueDate is a two-tier serverless app. The browser only ever talks to CloudFront; the Lambda
+Function URL is the only compute. Nothing is a long-running server, so it costs near zero at
+idle and scales to zero.
 
 ### The request path, end to end
 
@@ -111,27 +157,14 @@ Browser (CloudFront, static HTML + JS)
    v
 Lambda Function URL  --->  handler.py
    |
-   |  1. extract.py      Textract DetectDocumentText    -> Line[] (id, text, confidence)
-   |  2. engine.py       rules only, no model           -> facts[] each with cites[]
-   |  3. (detect state from the address text)
-   |  4. aid.py          pick real free legal-aid links  -> resources[]
-   |  5. narrate.py      Bedrock Nova Lite, guardrailed  -> grounded summary/checklist/rights
+   |  1. extract.py   Textract DetectDocumentText    -> Line[] (id, text, confidence)
+   |  2. engine.py    rules only, no model           -> facts[] each with cites[]
+   |  3. detect state from the address text
+   |  4. aid.py       pick real free legal-aid links  -> resources[]
+   |  5. narrate.py   Bedrock Nova Lite, guardrailed  -> grounded summary/checklist/rights
    v
-JSON response  { notice_type, facts[], missing[], resources[], narration, lines[], disclaimer }
+JSON  { notice_type, facts[], missing[], resources[], narration, lines[], disclaimer }
 ```
-
-### Components and why each one is there
-
-| Component | Service | Role |
-|-----------|---------|------|
-| Static front end | Amazon S3 (private) + Amazon CloudFront (OAC) | Serves one HTML page over HTTPS. No login wall, so an automated scorer and a judge can reach the full experience in one click. S3 is blocked from public access; only CloudFront can read it. |
-| API | AWS Lambda (Python 3.12) + Lambda Function URL | One function runs the whole pipeline. The Function URL gives a public HTTPS endpoint with no API Gateway needed. CORS is owned by the Function URL config (single source of truth). |
-| Document read | Amazon Textract (`DetectDocumentText`) | Returns each `LINE` block with text, a bounding box, and a confidence score. The line ids become the citation anchors every answer links back to. |
-| Deterministic engine | Plain Python (`engine.py`) | Classifies the notice type, extracts amounts and dates, and computes a deadline from a day-count using a stated rule. No model involved, so a date can never be hallucinated. |
-| Narration | Amazon Bedrock, Amazon Nova Lite (`us.amazon.nova-2-lite-v1:0`) | Translates and simplifies the deterministic facts into the chosen language and reading level. Guardrailed: it only receives the facts, and any claim it returns without a fact id is dropped. |
-| Legal-aid routing | Static data (`aid.py`) | Real national entry points (LawHelp.org, Legal Services Corporation, 211) plus per-state hooks, chosen by the state detected from the address. |
-| Uploads | Amazon S3 (24h lifecycle TTL) | For the image/PDF upload path. Documents auto-delete within a day. |
-| Infrastructure | AWS CDK (Python) | One stack defines everything. `cdk deploy` prints the live Site URL and API URL. |
 
 ### The data contract (what the API returns)
 
@@ -174,75 +207,19 @@ not ask the model for a date. It:
 If either input is missing, it does **not** guess. It reports the day-count alone, or says
 the notice has no clear deadline, and routes the user to free help.
 
-### Security and privacy
-
-- **Read-only to the user.** The app never writes to or changes anything in the tenant's world.
-- **Least-privilege IAM.** The API Lambda holds only `textract:DetectDocumentText` /
-  `AnalyzeDocument` and `bedrock:InvokeModel` / `InvokeModelWithResponseStream`, plus read on
-  its own uploads bucket. Nothing else.
-- **No account, no tracking.** There is no login and no analytics on the critical path.
-- **Short retention.** Uploaded files live in an S3 bucket with a 24 hour lifecycle expiry.
-- **Private origin.** The site bucket blocks all public access; CloudFront reads it through
-  Origin Access Control.
-
-### Cost (why it survives, cheaply, past the deadline)
-
-At idle the stack costs effectively nothing: Lambda and S3 have no idle charge, and
-CloudFront serves a tiny static page. Per analysis, the only real cost is one Textract page
-read (if an image is uploaded) and one short Amazon Nova Lite call for narration, both
-fractions of a cent. A demo running hundreds of times stays in the low cents per month.
-
-### Accessibility and the front end
-
-One page, no framework, server-reachable without JavaScript for the content. It targets WCAG
-2.1 AA: visible focus rings, keyboard operability, labelled controls, a skip link, language
-attributes that switch with the English/Spanish toggle, and a full `prefers-reduced-motion`
-path that disables the pointer-tilt and parallax. The palette ("Midnight and Champagne",
-deep navy with a single champagne-gold accent) keeps body text above 4.5:1 contrast.
-
----
-
-## 🔥 The Three Trust Beats
-
-### 1️⃣ Every answer is cited to your own notice
-Click any `📎` chip and the exact line of your notice scrolls into view and highlights. No
-claim appears without a line behind it.
-
-### 2️⃣ It refuses to invent
-No deadline in the paper means no deadline on screen. A day-count with no start date is
-reported honestly as "days only", never guessed into a fake date. Proven by the test suite
-(`test_R7_never_invents_a_date`, `test_R10_refuses_when_only_a_day_count`).
-
-### 3️⃣ It computes in the open
-When the deadline is a day-count ("within 3 days"), DueDate computes the date and shows the
-rule on screen: `Computed - 3 days from the notice date 2026-01-06`. Nothing is hidden.
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Choice |
-|-------|--------|
-| Document extraction | Amazon Textract (`DetectDocumentText`, lines + geometry + confidence) |
-| Deterministic engine | Python rules: notice-type classification, deadline math, cited facts |
-| Narration + translation | Amazon Bedrock, Amazon Nova Lite (`us.amazon.nova-2-lite-v1:0`) |
-| API | AWS Lambda (Python 3.12) + Lambda Function URL (public HTTPS, no login) |
-| Front end | Static HTML served by Amazon CloudFront over private Amazon S3 (OAC) |
-| Uploads | Amazon S3 bucket with a 24 hour lifecycle TTL |
-| IaC | AWS CDK (Python) |
-| Build | Kiro CLI connected to AWS via the Agent Toolkit and AWS MCP servers |
-
 ---
 
 ## 🚀 Getting Started
 
-### Try the live app
-No install, no account. Open the live URL and click **Try a sample notice**:
+### Try the live app (no install, no account)
 
 > **https://d3pjdlu332prje.cloudfront.net**
 
-### Run the engine and tests locally
-The deterministic trust engine runs with no AWS calls, so you can prove the guarantees in
+Open it, click **Check my notice** (or scroll down), then **Try a sample notice**.
+
+### Prove the trust contract locally (no AWS needed)
+
+The deterministic engine runs with zero AWS calls, so you can prove the guarantees in
 seconds:
 
 ```bash
@@ -251,16 +228,23 @@ cd duedate
 python3 tests/test_engine.py        # 8 trust-contract tests, no AWS needed
 ```
 
+Expected: `8/8 passed`, including `test_R7_never_invents_a_date` and
+`test_R10_refuses_when_only_a_day_count`.
+
 ### Call the live API directly
+
 ```bash
 curl -s -X POST "$DUEDATE_API_URL" \
   -H 'Content-Type: application/json' \
   -d '{"text":"THREE-DAY NOTICE TO PAY RENT OR QUIT\nThe total amount due is $2,450.00.\nYou must pay within THREE (3) days or quit.\nThis notice is dated January 6, 2026.","language":"en"}'
 ```
+
 The response carries the deterministic `facts` (each with its `cites`), the guardrailed
 `narration`, and the real `resources` for the detected state.
 
-### Deploy your own
+<details>
+<summary>Deploy your own copy with AWS CDK</summary>
+
 ```bash
 cd infra
 python3 -m venv .venv && . .venv/bin/activate
@@ -268,9 +252,11 @@ pip install aws-cdk-lib constructs
 npx aws-cdk bootstrap          # once per account/region
 npx aws-cdk deploy             # prints the live Site URL and API URL
 ```
-> You need Amazon Bedrock model access (Nova Lite) and Amazon Textract enabled in
-> `us-east-1`. The Lambda role is least-privilege: `textract:DetectDocumentText` and
-> `bedrock:InvokeModel` only.
+
+You need Amazon Bedrock model access (Nova Lite) and Amazon Textract enabled in
+`us-east-1`. The Lambda role is least-privilege: `textract:DetectDocumentText` and
+`bedrock:InvokeModel` only.
+</details>
 
 ---
 
@@ -285,7 +271,9 @@ duedate/
 │   ├── aid.py               # real free legal-aid directory with per-state hooks
 │   └── handler.py           # Lambda: extract -> analyze -> narrate -> route, with CORS
 ├── frontend/
-│   └── index.html           # one-page, WCAG-AA, bilingual UI (deadline hero, cited lines)
+│   ├── index.html           # one-page, WCAG-AA, bilingual UI (two-view: hero then paste)
+│   ├── favicon.svg
+│   └── og.png               # social share image
 ├── infra/
 │   ├── app.py               # AWS CDK stack: Lambda URL, S3 + CloudFront, TTL uploads, IAM
 │   └── cdk.json
@@ -295,11 +283,26 @@ duedate/
 │   └── duedate.md           # EARS requirements, written before the code
 ├── samples/
 │   └── pay_or_quit_ca.txt   # a realistic California 3-day notice for the demo
+├── docs/
+│   ├── architecture.png     # the How It Works diagram
+│   ├── architecture.html    # diagram source (Playwright-rendered)
+│   ├── proof.md             # proof the coding agent connected to AWS + the deploy
+│   └── screenshots/         # live-app screenshots used in this README
 ├── .kiro/steering/
 │   └── product.md           # the steering doc that tailored the coding agent
-└── docs/
-    └── architecture.png     # the How It Works diagram
+└── LICENSE
 ```
+
+---
+
+## 🔐 Least-Privilege IAM
+
+The API Lambda touches almost nothing in the account. Its role grants exactly
+`textract:DetectDocumentText` / `AnalyzeDocument` and `bedrock:InvokeModel` /
+`InvokeModelWithResponseStream`, plus read on its own short-TTL uploads bucket. The static
+site bucket blocks all public access; only CloudFront reads it through Origin Access Control.
+Uploaded documents auto-delete within 24 hours. There is no login and no tracking on the
+critical path.
 
 ---
 
@@ -307,9 +310,9 @@ duedate/
 
 DueDate was built end to end with **Kiro CLI** connected to AWS through the Agent Toolkit and
 AWS MCP servers. The agent wrote the engine and tests, authored the CDK, deployed the stack,
-and verified the live app against real Amazon Textract and Amazon Bedrock calls. The
-spec-driven path was deliberate: steering doc, then an EARS spec, then code, then tests, then
-infrastructure as code. Proof of the agent-to-AWS connection and the deploy is in
+and verified the live app against real Amazon Textract and Amazon Bedrock calls. The path was
+deliberately spec-driven: a steering doc, then an EARS spec, then code, then tests, then
+infrastructure as code. Proof of the agent-to-AWS connection and the deploy outputs is in
 [`docs/proof.md`](docs/proof.md).
 
 ---
@@ -327,17 +330,31 @@ A tool that speaks to frightened people must not overclaim. So, plainly:
   help" rather than guessing.
 - **Jurisdiction detection is best-effort.** It reads the state from the address text. If it
   is unsure, it falls back to national free-aid resources.
-- **The model only narrates.** No date or amount comes from the model. If the facts are
-  wrong, it is the deterministic engine to fix, not a prompt.
+- **The model only narrates.** No date or amount comes from the model. If a fact is wrong, it
+  is the deterministic engine to fix, not a prompt.
 
 These limits are the point. The honesty panel and the refuse-to-invent rule exist precisely
 because the reader often cannot check the answer themselves.
 
 ---
 
+## 🎬 Video Tutorial & Article
+
+- 📺 Video: _coming soon_
+- 📝 Article: _coming soon_
+
+---
+
+## 🤝 Contributing
+
+Issues and PRs welcome. The deterministic engine and its tests are the heart of the project;
+new notice types and new jurisdictions are the most useful contributions.
+
+---
+
 ## 📝 License
 
-Apache License 2.0, see [LICENSE](LICENSE).
+Apache License 2.0 - see [LICENSE](LICENSE).
 
 ---
 
@@ -349,5 +366,6 @@ Made with care by [Sarvar](https://sarvarnadaf.com)
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-sarvar04-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/sarvar04/)
 [![GitHub](https://img.shields.io/badge/GitHub-simplynadaf-181717?style=flat-square&logo=github)](https://github.com/simplynadaf)
+[![Dev.to](https://img.shields.io/badge/Dev.to-sarvar__04-0A0A0A?style=flat-square&logo=devdotto&logoColor=white)](https://dev.to/sarvar_04)
 
 </div>
