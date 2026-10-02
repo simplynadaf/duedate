@@ -208,7 +208,7 @@ def analyze(lines: list[Line],
         "We could not confidently identify this notice type. Please use free legal help "
         "to confirm what it is.")
 
-    # "What your notice does NOT say" — honesty surface (R10/R11)
+    # "What your notice does NOT say" - honesty surface (R10/R11)
     missing = []
     if "deadline" not in by_key:
         missing.append("a clear deadline date")

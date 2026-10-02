@@ -1,4 +1,4 @@
-# DueDate — EARS requirements (spec-driven; written before code)
+# DueDate - EARS requirements (spec-driven; written before code)
 
 EARS = Easy Approach to Requirements Syntax. "The system shall / When <trigger>, the
 system shall ..." Each requirement is testable.
@@ -11,7 +11,7 @@ R3. The system shall not require an account or login to analyze a notice.
 
 ## Deterministic fact extraction (NO LLM)
 R4. The system shall classify the notice into one of: pay-or-quit, cure-or-quit,
-    unconditional-quit, termination-30/60/90, or unknown — using rule-based matching over
+    unconditional-quit, termination-30/60/90, or unknown, using rule-based matching over
     extracted text, and shall cite the line(s) that triggered the classification.
 R5. The system shall extract, by rule, any explicit deadline date, dollar amount owed,
     named parties, and property address, each with the citing line id, or mark them absent.

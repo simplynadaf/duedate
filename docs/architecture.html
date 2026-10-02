@@ -1,0 +1,80 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+body{width:1200px;height:675px;background:linear-gradient(135deg,#042f2e 0%,#0f766e 55%,#115e59 100%);color:#eafaf6;padding:40px 48px;position:relative;overflow:hidden}
+.title{font-size:28px;font-weight:800;letter-spacing:-.02em}
+.sub{font-size:14.5px;color:#9fe7d6;margin-top:4px;font-weight:600}
+.flow{display:flex;align-items:stretch;gap:0;margin-top:30px}
+.stage{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(159,231,214,.28);border-radius:16px;padding:18px 16px 34px;position:relative}
+.stage h3{font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+.stage .svc{font-size:11.5px;color:#f6c667;font-weight:700;margin-top:3px;letter-spacing:.02em}
+.stage p{font-size:12px;line-height:1.45;color:#d6f5ee;margin-top:9px}
+.ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:15px;background:rgba(20,184,166,.28);border:1px solid rgba(159,231,214,.4)}
+.arrow{align-self:center;color:#5eead4;font-size:26px;padding:0 6px;font-weight:800}
+.badge{position:absolute;top:-11px;left:16px;font-size:10px;font-weight:800;letter-spacing:.06em;
+  background:#f59e0b;color:#1c1300;padding:3px 9px;border-radius:999px}
+.freedom{position:absolute;bottom:14px;left:16px;right:16px;font-size:10.5px;color:#9fe7d6;font-weight:600}
+.guard{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.45)}
+.contract{margin-top:26px;background:rgba(0,0,0,.22);border:1px solid rgba(159,231,214,.25);border-radius:14px;
+  padding:16px 20px;display:flex;align-items:center;gap:16px}
+.contract .big{font-size:19px;font-weight:800;color:#5eead4;white-space:nowrap}
+.contract .pts{display:flex;gap:22px;flex-wrap:wrap;font-size:12.5px;color:#eafaf6}
+.contract .pts b{color:#f6c667}
+.footer{position:absolute;bottom:20px;right:48px;font-size:12px;color:#9fe7d6;font-weight:700}
+.chip{display:inline-block;background:rgba(94,234,212,.16);border:1px solid rgba(94,234,212,.4);
+  border-radius:999px;padding:2px 10px;font-size:11px;font-weight:700;color:#5eead4;margin-top:8px}
+</style></head><body>
+  <div class="title">📬 DueDate: how a notice becomes a cited, trustworthy answer</div>
+  <div class="sub">Facts are code. The AI model only narrates. Every claim is pinned to a line of your own notice.</div>
+
+  <div class="flow">
+    <div class="stage">
+      <span class="badge">INPUT</span>
+      <h3><span class="ic">📄</span> Upload notice</h3>
+      <div class="svc">Amazon CloudFront + S3</div>
+      <p>Tenant pastes or uploads the eviction notice. Static page over HTTPS, no login, so judges and the AI scorer reach it in one click.</p>
+    </div>
+    <div class="arrow">&rsaquo;</div>
+    <div class="stage">
+      <span class="badge">EXTRACT</span>
+      <h3><span class="ic">🔎</span> Read every line</h3>
+      <div class="svc">Amazon Textract</div>
+      <p>Each line is read with its position and confidence. This becomes the citation substrate every answer points back to.</p>
+      <div class="freedom">Model freedom: none</div>
+    </div>
+    <div class="arrow">&rsaquo;</div>
+    <div class="stage">
+      <span class="badge">ANALYZE</span>
+      <h3><span class="ic">⚙️</span> Facts by rule</h3>
+      <div class="svc">Deterministic engine</div>
+      <p>Notice type, amount, and deadline found by rules. Day-counts become dates by a shown rule. The model cannot change a date.</p>
+      <div class="freedom">Model freedom: none</div>
+    </div>
+    <div class="arrow">&rsaquo;</div>
+    <div class="stage guard">
+      <span class="badge">NARRATE</span>
+      <h3><span class="ic">💬</span> Plain language</h3>
+      <div class="svc">Amazon Bedrock (Nova Lite)</div>
+      <p>Translates and simplifies the facts into English or Spanish. Any sentence without a fact id is dropped before display.</p>
+      <div class="freedom">Fenced: facts in, citations out</div>
+    </div>
+    <div class="arrow">&rsaquo;</div>
+    <div class="stage">
+      <span class="badge">ROUTE</span>
+      <h3><span class="ic">🤝</span> Free help</h3>
+      <div class="svc">Legal-aid directory</div>
+      <p>Real free legal-aid links, chosen by the detected state. DueDate explains and cites, then hands off. Not legal advice.</p>
+    </div>
+  </div>
+
+  <div class="contract">
+    <div class="big">The trust contract</div>
+    <div class="pts">
+      <span>📎 <b>Every claim cited</b> to your own notice</span>
+      <span>🚫 <b>Refuses to invent</b> what the notice does not say</span>
+      <span>🧮 <b>Computes in the open</b> with the rule shown</span>
+      <span>🔒 <b>Read-only, least privilege</b>, 24h upload TTL</span>
+    </div>
+  </div>
+  <div class="chip" style="position:absolute;bottom:18px;left:48px">Deployed with AWS CDK · built with Kiro + AWS MCP</div>
+  <div class="footer">AWS Zero to Shipped · Social Good</div>
+</body></html>

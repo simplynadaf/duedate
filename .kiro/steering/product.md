@@ -1,9 +1,9 @@
-# DueDate — product steering
+# DueDate - product steering
 
 ## What we are building
 DueDate reads an eviction notice a tenant received and returns, in plain language and in
 the tenant's own language: the single deadline they must not miss, the exact action
-required before it, and their stated rights — with every statement pinned to the exact
+required before it, and their stated rights, with every statement pinned to the exact
 line of their own notice. It never invents anything the notice does not say.
 
 ## Who it is for
