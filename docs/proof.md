@@ -5,7 +5,7 @@ with evidence of the connection and the deploy. Everything below is from the rea
 
 ## The agent and the connection
 - **Agent:** Kiro CLI, connected to AWS through the Agent Toolkit for AWS and AWS MCP servers.
-- **AWS identity used:** IAM principal `arn:aws:iam::175662053988:user/server` in `us-east-1`
+- **AWS identity used:** IAM principal `arn:aws:iam::<your-account-id>:user/server` in `us-east-1`
   (verified with `aws sts get-caller-identity`).
 - **Model access confirmed live:** the agent invoked Amazon Bedrock `us.amazon.nova-2-lite-v1:0`
   and received a response before any app code depended on it, and confirmed Amazon Textract
