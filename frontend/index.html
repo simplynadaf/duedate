@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DueDate - Understand your eviction notice before the deadline</title>
 <meta name="description" content="Upload an eviction notice and understand the one date you cannot miss, in plain language and your own language, grounded in your own paper. Not legal advice." />
-<meta name="theme-color" content="#07211d" />
+<meta name="theme-color" content="#080B14" />
 <meta name="color-scheme" content="dark" />
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
@@ -22,44 +22,46 @@
 <script src="config.js"></script>
 <style>
   :root{
-    /* calm clarity: deep teal world, warm paper surfaces, one amber accent for the deadline */
-    --bg:#07211d;            /* deep teal-black */
-    --bg-2:#0a2b26;
-    --surface:#0e352f;       /* raised surface */
-    --surface-2:#124038;
-    --hair:rgba(173,230,214,.14);
-    --hair-strong:rgba(173,230,214,.24);
-    --ink:#eafaf4;
-    --ink-soft:#a9ccc2;      /* tinted from the hue, never flat gray */
-    --ink-faint:#7ba79b;
-    --brand:#2dd4bf;         /* teal */
-    --brand-ink:#0b3d35;
-    --amber:#f6b24a;         /* the one accent, for the single deadline */
-    --amber-ink:#3a2707;
-    --danger:#f08a7f;
-    --ok:#59d6a9;
+    /* "Midnight & Champagne" - enterprise, trust, premium (navy + muted gold) */
+    --bg:#080B14;            /* tinted near-black navy, page bg 1 */
+    --bg-2:#0C1120;          /* bg 2, used sparingly */
+    --surface:#10172B;       /* raised component surface */
+    --surface-2:#161F38;     /* hover/active surface */
+    --hair:rgba(226,232,255,.09);
+    --hair-strong:rgba(226,232,255,.17);
+    --ink:#F4F6FC;           /* primary text, off-white */
+    --ink-soft:#A6B0CC;      /* secondary, tinted from navy */
+    --ink-faint:#6B779A;
+    --brand:#D8B972;         /* champagne gold, the one accent */
+    --brand-hi:#ECD79B;      /* gold highlight / glow */
+    --brand-ink:#2A1F08;     /* text on gold */
+    --amber:#D8B972;         /* deadline uses the same gold (one accent world) */
+    --amber-ink:#2A1F08;
+    --sapphire:#5B8CFF;      /* cool secondary, links/focus only, minimal */
+    --danger:#f0897f;
+    --ok:#6dd1a8;
     --radius:18px;
-    --ease:cubic-bezier(0.22,0.68,0,1);     /* exponential-ish ease-out */
+    --ease:cubic-bezier(0.22,0.68,0,1);
     --ease-soft:cubic-bezier(0.33,1,0.68,1);
-    --shadow:0 18px 50px -24px rgba(0,0,0,.7), 0 2px 10px -4px rgba(0,40,34,.5);
+    --shadow:0 24px 60px -28px rgba(0,0,0,.85), 0 2px 12px -4px rgba(4,8,20,.6);
     --measure:68ch;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{margin:0;background:
-      radial-gradient(1100px 600px at 80% -10%, rgba(45,212,191,.14), transparent 60%),
-      radial-gradient(900px 500px at -5% 10%, rgba(246,178,74,.08), transparent 55%),
+      radial-gradient(1100px 620px at 82% -12%, rgba(216,185,114,.13), transparent 58%),
+      radial-gradient(900px 520px at -6% 8%, rgba(91,140,255,.09), transparent 55%),
       var(--bg);
     color:var(--ink);
     font:400 16px/1.6 "Plus Jakarta Sans",system-ui,sans-serif;
     letter-spacing:-0.005em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   /* themed browser surfaces (craft floor) */
-  ::selection{background:rgba(45,212,191,.3);color:#fff}
+  ::selection{background:rgba(216,185,114,.28);color:#fff}
   ::placeholder{color:var(--ink-faint)}
   *{caret-color:var(--brand)}
   ::-webkit-scrollbar{width:12px;height:12px}
-  ::-webkit-scrollbar-thumb{background:#1a4b43;border:3px solid var(--bg);border-radius:10px}
-  ::-webkit-scrollbar-thumb:hover{background:#226056}
+  ::-webkit-scrollbar-thumb{background:#1b2440;border:3px solid var(--bg);border-radius:10px}
+  ::-webkit-scrollbar-thumb:hover{background:#273355}
   a{color:var(--brand);text-underline-offset:3px;text-decoration-thickness:1px}
   /* fixed grain */
   body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.035;
@@ -103,14 +105,14 @@
   .intake label.lab{display:block;font-weight:700;font-size:15px;margin-bottom:10px;letter-spacing:-.01em}
   textarea{width:100%;min-height:148px;background:var(--bg);border:1px solid var(--hair-strong);border-radius:13px;
     padding:15px;color:var(--ink);font:400 14.5px/1.6 "Plus Jakarta Sans";resize:vertical;transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
-  textarea:focus{border-color:var(--brand);box-shadow:0 0 0 4px rgba(45,212,191,.14);outline:none}
+  textarea:focus{border-color:var(--brand);box-shadow:0 0 0 4px rgba(216,185,114,.14);outline:none}
   .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:16px}
   .btn{appearance:none;border:0;border-radius:13px;padding:14px 22px;font:700 15.5px "Plus Jakarta Sans";
     letter-spacing:-.01em;cursor:pointer;display:inline-flex;align-items:center;gap:11px;
     transition:transform .4s var(--ease),box-shadow .4s var(--ease),background .3s var(--ease)}
   .btn:active{transform:scale(.975)}
-  .btn.primary{background:var(--brand);color:var(--brand-ink);box-shadow:0 12px 30px -14px rgba(45,212,191,.8)}
-  .btn.primary:hover{box-shadow:0 16px 40px -14px rgba(45,212,191,.95)}
+  .btn.primary{background:var(--brand);color:var(--brand-ink);box-shadow:0 12px 30px -14px rgba(216,185,114,.6)}
+  .btn.primary:hover{box-shadow:0 16px 40px -14px rgba(216,185,114,.8)}
   .btn.primary .chev{width:26px;height:26px;border-radius:50%;background:rgba(11,61,53,.18);display:grid;place-items:center;
     transition:transform .4s var(--ease)}
   .btn.primary:hover .chev{transform:translateX(3px)}
@@ -121,20 +123,27 @@
   .results{margin-top:28px;display:none}
   .results.show{display:block}
 
-  /* the one deadline - the single amber moment */
-  .deadline{position:relative;overflow:hidden;border-radius:var(--radius);padding:30px 28px;margin-bottom:20px;
-    background:linear-gradient(135deg,#143f38,#0c2f29);border:1px solid var(--hair-strong);
-    box-shadow:var(--shadow)}
-  .deadline .glow{position:absolute;width:360px;height:360px;right:-80px;top:-120px;border-radius:50%;
-    background:radial-gradient(circle,rgba(246,178,74,.22),transparent 65%);pointer-events:none}
-  .deadline .k{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:700}
+  /* the one deadline - the single gold moment, with tilt + specular sheen */
+  .deadline-stage{perspective:1200px;margin-bottom:20px}
+  .deadline{position:relative;overflow:hidden;border-radius:var(--radius);padding:30px 28px;
+    background:linear-gradient(135deg,#141d38,#0b1120);border:1px solid var(--hair-strong);
+    box-shadow:var(--shadow);transform-style:preserve-3d;
+    transition:transform .5s var(--ease)}
+  .deadline .glow{position:absolute;width:380px;height:380px;right:-90px;top:-130px;border-radius:50%;
+    background:radial-gradient(circle,rgba(216,185,114,.24),transparent 65%);pointer-events:none}
+  /* slow specular light-sweep across the gold edge */
+  .deadline .sheen{position:absolute;inset:0;border-radius:var(--radius);pointer-events:none;
+    background:linear-gradient(115deg,transparent 30%,rgba(236,215,155,.10) 48%,rgba(236,215,155,.02) 56%,transparent 70%);
+    background-size:220% 100%;animation:sweep 7s var(--ease-soft) infinite}
+  @keyframes sweep{0%{background-position:140% 0}60%,100%{background-position:-40% 0}}
+  .deadline .k{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brand);font-weight:700;position:relative}
   .deadline .d{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(30px,4.6vw,44px);line-height:1.08;
-    letter-spacing:-.02em;margin:8px 0 4px}
-  .deadline .sub{color:var(--ink-soft);font-size:16.5px;max-width:52ch}
-  .deadline .rule{display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:rgba(246,178,74,.12);
-    border:1px solid rgba(246,178,74,.32);color:var(--amber);border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:600}
-  .deadline.warn{background:linear-gradient(135deg,#3a2d12,#2a2110)}
-  .deadline.warn .k{color:#f6b24a}
+    letter-spacing:-.02em;margin:8px 0 4px;position:relative}
+  .deadline .sub{color:var(--ink-soft);font-size:16.5px;max-width:52ch;position:relative}
+  .deadline .rule{display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:rgba(216,185,114,.12);
+    border:1px solid rgba(216,185,114,.32);color:var(--brand);border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:600;position:relative}
+  .deadline.warn{background:linear-gradient(135deg,#2a2238,#15121f)}
+  .deadline.warn .k,.deadline.warn .rule{color:#c6b0e8}
 
   .nt{padding:20px 22px;margin-bottom:20px}
   .nt h2{font-family:"Fraunces",serif;font-weight:600;font-size:20px;letter-spacing:-.01em;margin:0 0 8px;display:flex;align-items:center;gap:11px}
@@ -149,15 +158,15 @@
   ul.clean li{padding:13px 0;border-top:1px solid var(--hair);font-size:15px;color:var(--ink);line-height:1.5}
   ul.clean li:first-child{border-top:0}
   .cite{display:inline-flex;align-items:center;gap:5px;margin-left:7px;font-size:11.5px;font-weight:700;
-    color:var(--brand);background:rgba(45,212,191,.12);border:1px solid rgba(45,212,191,.26);border-radius:999px;
+    color:var(--brand);background:rgba(216,185,114,.12);border:1px solid rgba(216,185,114,.3);border-radius:999px;
     padding:2px 9px;cursor:pointer;vertical-align:middle;transition:background .25s var(--ease)}
-  .cite:hover{background:rgba(45,212,191,.22)}
+  .cite:hover{background:rgba(216,185,114,.24)}
   .cite svg{width:11px;height:11px}
 
-  .notsay{background:linear-gradient(180deg,#3a2d12,#2a2110);border-color:rgba(246,178,74,.3)}
-  .notsay h2 svg{color:var(--amber)}
-  .notsay ul.clean li{border-top-color:rgba(246,178,74,.2)}
-  .notsay .why{margin:12px 0 0;color:var(--amber);font-weight:600;font-size:14px}
+  .notsay{background:linear-gradient(180deg,#241f33,#15121f);border-color:rgba(154,130,214,.3)}
+  .notsay h2 svg{color:#b9a4e6}
+  .notsay ul.clean li{border-top-color:rgba(154,130,214,.2)}
+  .notsay .why{margin:12px 0 0;color:#c6b0e8;font-weight:600;font-size:14px}
 
   .aid a{display:flex;align-items:center;gap:10px;padding:13px 0;border-top:1px solid var(--hair);font-weight:600;color:var(--ink);text-decoration:none;transition:color .25s var(--ease)}
   .aid a:first-of-type{border-top:0}
@@ -171,8 +180,8 @@
   .doc{background:var(--bg);border:1px solid var(--hair);border-radius:12px;padding:16px;
     font:400 13.5px/1.75 ui-monospace,"SF Mono",Menlo,Consolas,monospace;max-height:330px;overflow:auto;color:var(--ink-soft)}
   .doc .ln{display:block;padding:3px 9px;border-radius:7px;transition:background .4s var(--ease),color .4s var(--ease)}
-  .doc .ln.hot{background:rgba(45,212,191,.16);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(45,212,191,.4)}
-  .doc .ln.flash{background:rgba(246,178,74,.28);color:#fff}
+  .doc .ln.hot{background:rgba(216,185,114,.16);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(216,185,114,.45)}
+  .doc .ln.flash{background:rgba(216,185,114,.34);color:#fff}
 
   .disclaimer{margin-top:20px;background:var(--surface);border:1px solid var(--hair);border-radius:13px;
     padding:15px 18px;color:var(--ink-soft);font-size:14px;display:flex;gap:11px;align-items:flex-start}
@@ -193,10 +202,10 @@
   <div class="wrap top">
     <div class="brand">
       <svg class="logo" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-        <rect x="2" y="4" width="26" height="30" rx="5" fill="#0e352f" stroke="#2dd4bf" stroke-width="1.6"/>
-        <path d="M8 12h14M8 18h14M8 24h8" stroke="#a9ccc2" stroke-width="1.6" stroke-linecap="round"/>
-        <circle cx="27" cy="26" r="8" fill="#07211d" stroke="#f6b24a" stroke-width="1.6"/>
-        <path d="M27 22v4l2.6 2" stroke="#f6b24a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="2" y="4" width="26" height="30" rx="5" fill="#10172B" stroke="#D8B972" stroke-width="1.6"/>
+        <path d="M8 12h14M8 18h14M8 24h8" stroke="#A6B0CC" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="27" cy="26" r="8" fill="#080B14" stroke="#D8B972" stroke-width="1.6"/>
+        <path d="M27 22v4l2.6 2" stroke="#D8B972" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <span>DueDate</span>
     </div>
@@ -233,13 +242,14 @@
   <section class="results" id="results" aria-live="polite" aria-labelledby="results-h">
     <h2 id="results-h" class="sr-only">Your results</h2>
 
-    <div class="deadline reveal" id="deadlineHero">
+    <div class="deadline-stage reveal"><div class="deadline" id="deadlineHero">
       <div class="glow" aria-hidden="true"></div>
+      <div class="sheen" aria-hidden="true"></div>
       <div class="k" data-i18n="keydate">Your key deadline</div>
       <div class="d" id="deadlineVal">...</div>
       <div class="sub" id="deadlineSub"></div>
       <div class="rule" id="deadlineRule" style="display:none"></div>
-    </div>
+    </div></div>
 
     <div class="surface nt reveal">
       <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;color:var(--brand)"><path d="M8 4h9l3 3v13H8z"/><path d="M4 8v12h11"/></svg><span id="ntLabel">Notice type</span></h2>
@@ -430,6 +440,36 @@ async function localDemo(text){
       rights:[{text:'You can stop the eviction by paying the full rent owed.',cite:['notice_type']}],grounded:true},
     lines:text.split('\n').filter(x=>x.trim()).map((x,i)=>({id:'L'+(i+1),text:x.trim()})),
     disclaimer:'DueDate explains your notice and points you to free help. It is not legal advice.'};
+}
+
+/* ---- Apple-like depth: pointer-tilt + gentle parallax (transform-only, reduced-motion safe) ---- */
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduceMotion){
+  // 1) pointer-tilt on the deadline hero (perspective + rotate3d on the stage)
+  function bindTilt(){
+    const stage=document.querySelector('.deadline-stage');const card=document.getElementById('deadlineHero');
+    if(!stage||!card||stage.dataset.tilt)return;stage.dataset.tilt='1';
+    let raf;
+    stage.addEventListener('pointermove',e=>{
+      const r=stage.getBoundingClientRect();
+      const px=(e.clientX-r.left)/r.width-0.5, py=(e.clientY-r.top)/r.height-0.5;
+      cancelAnimationFrame(raf);
+      raf=requestAnimationFrame(()=>{card.style.transform=`rotateX(${py*-5}deg) rotateY(${px*7}deg) translateZ(0)`;});
+    });
+    stage.addEventListener('pointerleave',()=>{card.style.transform='rotateX(0) rotateY(0)';});
+  }
+  // 2) gentle background glow parallax tied to scroll (transform-only on body bg via a layer)
+  let ticking=false;
+  addEventListener('scroll',()=>{
+    if(ticking)return;ticking=true;
+    requestAnimationFrame(()=>{
+      const y=scrollY;
+      document.body.style.backgroundPosition=`82% ${-12+y*0.015}%, -6% ${8+y*0.01}%, 0 0`;
+      ticking=false;
+    });
+  },{passive:true});
+  // rebind tilt whenever results render
+  const _render=render;render=function(d){_render(d);bindTilt();};
 }
 </script>
 </body>
