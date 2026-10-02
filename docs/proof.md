@@ -4,7 +4,7 @@ This documents the AWS Zero to Shipped requirement that a coding agent was conne
 with evidence of the connection and the deploy. Everything below is from the real build.
 
 ## The agent and the connection
-- **Agent:** Kiro CLI, connected to AWS through the Agent Toolkit for AWS and AWS MCP servers.
+- **Agent:** an AI coding agent (CLI), connected to AWS through the Agent Toolkit for AWS and AWS MCP servers.
 - **AWS identity used:** IAM principal `arn:aws:iam::<your-account-id>:user/server` in `us-east-1`
   (verified with `aws sts get-caller-identity`).
 - **Model access confirmed live:** the agent invoked Amazon Bedrock `us.amazon.nova-2-lite-v1:0`
@@ -12,7 +12,7 @@ with evidence of the connection and the deploy. Everything below is from the rea
   was reachable in the same account and region.
 
 ## What the agent did, in order (spec-driven)
-1. Wrote the steering doc (`.kiro/steering/product.md`) to tailor itself to the task.
+1. Wrote the design/steering doc (`docs/design-principles.md`) to tailor itself to the task.
 2. Wrote the EARS requirements (`spec/duedate.md`) before any code.
 3. Built the deterministic trust engine (`backend/engine.py`) and a trust-contract test
    suite (`tests/test_engine.py`), then ran it: 8 of 8 passing.
@@ -53,5 +53,5 @@ curl -s -X POST "$DUEDATE_API_URL" -H 'Content-Type: application/json' \
   -d '{"text":"THREE-DAY NOTICE TO PAY RENT OR QUIT ... dated January 6, 2026.","language":"en"}'
 ```
 
-> Screenshots of the Kiro session invoking AWS MCP tools and the CloudFormation deploy are
+> Screenshots of the coding-agent session invoking AWS MCP tools and the CloudFormation deploy are
 > added alongside this file as they are captured during the demo recording.

@@ -7,7 +7,7 @@
 [![Live on AWS](https://img.shields.io/badge/Live%20on-AWS-0E7C5A?style=for-the-badge&logo=amazonwebservices&logoColor=white)](https://d3pjdlu332prje.cloudfront.net)
 [![Amazon Textract](https://img.shields.io/badge/Reads%20with-Amazon%20Textract-14B8A6?style=for-the-badge&logo=amazon&logoColor=white)](https://aws.amazon.com/textract/)
 [![Amazon Bedrock](https://img.shields.io/badge/Explains%20with-Amazon%20Bedrock-0F766E?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com/bedrock/)
-[![Built with Kiro](https://img.shields.io/badge/Built%20with-Kiro%20%2B%20AWS%20MCP-D8B972?style=for-the-badge&logo=awslambda&logoColor=black)](https://kiro.dev)
+[![Built with an AI coding agent](https://img.shields.io/badge/Built%20with-AI%20coding%20agent%20%2B%20AWS%20MCP-D8B972?style=for-the-badge&logo=awslambda&logoColor=black)](https://aws.amazon.com/)
 [![IaC: AWS CDK](https://img.shields.io/badge/IaC-AWS%20CDK-115E59?style=for-the-badge)](https://aws.amazon.com/cdk/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-134E4A?style=for-the-badge)](LICENSE)
 
@@ -138,7 +138,7 @@ the user (or a lawyer) can check the arithmetic.
 | Front end | Static HTML served by Amazon CloudFront over private Amazon S3 (OAC) |
 | Uploads | Amazon S3 bucket with a 24 hour lifecycle TTL |
 | IaC | AWS CDK (Python) |
-| Build | Kiro CLI connected to AWS via the Agent Toolkit and AWS MCP servers |
+| Build | An AI coding agent connected to AWS via the Agent Toolkit and AWS MCP servers |
 
 ---
 
@@ -293,8 +293,7 @@ duedate/
 │   ├── architecture.html    # diagram source (Playwright-rendered)
 │   ├── proof.md             # proof the coding agent connected to AWS + the deploy
 │   └── screenshots/         # live-app screenshots used in this README
-├── .kiro/steering/
-│   └── product.md           # the steering doc that tailored the coding agent
+├── docs/design-principles.md  # the design doc that tailored the coding agent
 └── LICENSE
 ```
 
@@ -313,7 +312,7 @@ critical path.
 
 ## ⚖️ Built With a Coding Agent on AWS
 
-DueDate was built end to end with **Kiro CLI** connected to AWS through the Agent Toolkit and
+DueDate was built end to end with **an AI coding agent** connected to AWS through the Agent Toolkit and
 AWS MCP servers. The agent wrote the engine and tests, authored the CDK, deployed the stack,
 and verified the live app against real Amazon Textract and Amazon Bedrock calls. The path was
 deliberately spec-driven: a steering doc, then an EARS spec, then code, then tests, then
