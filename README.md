@@ -15,7 +15,13 @@
 
 **AWS Zero to Shipped** · Category: `#social-good` · Lane: `#community`
 
-<img src="docs/screenshots/01-hero.png" alt="DueDate landing page: deep navy screen, headline Know the one date you cannot miss, three trust pills, and a gold Check my notice button" width="100%"/>
+<img src="docs/cover.png" alt="DueDate: an AI document-analysis interface that reads an eviction notice and shows the one deadline, cited to the tenant's own paper" width="100%"/>
+
+<br/>
+
+[![Watch the 2-minute demo on YouTube](https://img.youtube.com/vi/pJ54JlNroLk/maxresdefault.jpg)](https://youtu.be/pJ54JlNroLk)
+
+<em>▶ Watch the 2-minute demo</em>
 
 </div>
 
