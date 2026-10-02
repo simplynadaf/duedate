@@ -12,6 +12,7 @@
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-134E4A?style=for-the-badge)](LICENSE)
 
 [![Try the live app](https://img.shields.io/badge/%E2%96%B6%20Try%20the%20live%20app-DueDate-D8B972?style=for-the-badge&logoColor=black)](https://d3pjdlu332prje.cloudfront.net)
+[![AWS Builder Center](https://img.shields.io/badge/AWS%20Builder%20Center-Project-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white)](https://builder.aws.com/project/3K8yKD60OhGgc49i8JQHq0Qmw0I/duedate-the-ai-that-explains-your-eviction-notice-and-cant-lie)
 
 **AWS Zero to Shipped** · Category: `#social-good` · Lane: `#community`
 
@@ -348,9 +349,10 @@ because the reader often cannot check the answer themselves.
 
 ---
 
-## 🎬 Video Tutorial & Article
+## 🎬 Demo, Project, and Article
 
-- 📺 Video: _coming soon_
+- 📺 Demo video: https://youtu.be/pJ54JlNroLk
+- 🏗️ AWS Builder Center project: https://builder.aws.com/project/3K8yKD60OhGgc49i8JQHq0Qmw0I/duedate-the-ai-that-explains-your-eviction-notice-and-cant-lie
 - 📝 Article: _coming soon_
 
 ---
