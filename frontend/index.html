@@ -80,15 +80,27 @@
     font:600 14px "Plus Jakarta Sans";cursor:pointer;transition:color .3s var(--ease),background .3s var(--ease)}
   .langs button[aria-pressed="true"]{background:var(--brand);color:var(--brand-ink)}
 
-  /* hero */
-  .hero{padding:40px 0 20px;position:relative;z-index:2}
-  .hero h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(34px,5.4vw,60px);line-height:1.04;
-    letter-spacing:-.025em;margin:0 0 .35em;text-wrap:balance;max-width:16ch}
-  .hero .lede{font-size:clamp(16px,2vw,19px);color:var(--ink-soft);max-width:60ch;text-wrap:pretty;margin:0}
-  .trust-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  /* hero - full first view */
+  .hero{min-height:calc(100vh - 86px);display:flex;flex-direction:column;justify-content:center;
+    padding:20px 0 40px;position:relative;z-index:2}
+  .hero h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(38px,6vw,68px);line-height:1.03;
+    letter-spacing:-.028em;margin:0 0 .35em;text-wrap:balance;max-width:15ch}
+  .hero .lede{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:60ch;text-wrap:pretty;margin:0}
+  .trust-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
   .pill{display:inline-flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--hair);
     border-radius:999px;padding:9px 15px 9px 13px;font-size:13.5px;font-weight:600;color:var(--ink-soft)}
   .pill svg{width:17px;height:17px;flex:none;color:var(--brand)}
+  .hero-cta{margin-top:34px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  /* scroll-down cue */
+  .scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;
+    align-items:center;gap:8px;color:var(--ink-faint);font-size:12.5px;font-weight:600;letter-spacing:.04em;
+    background:none;border:0;cursor:pointer;transition:color .3s var(--ease)}
+  .scrollcue:hover{color:var(--brand)}
+  .scrollcue .mouse{width:26px;height:40px;border:1.5px solid var(--hair-strong);border-radius:14px;position:relative}
+  .scrollcue .mouse::after{content:"";position:absolute;left:50%;top:7px;width:3px;height:7px;border-radius:3px;
+    background:var(--brand);transform:translateX(-50%);animation:wheel 1.8s var(--ease-soft) infinite}
+  @keyframes wheel{0%{opacity:0;transform:translate(-50%,0)}30%{opacity:1}60%{opacity:1;transform:translate(-50%,10px)}100%{opacity:0;transform:translate(-50%,12px)}}
+  @media (prefers-reduced-motion:reduce){.scrollcue .mouse::after{animation:none}}
 
   /* reveal animation: one authored moment */
   .reveal{opacity:0;transform:translateY(22px);filter:blur(6px);
@@ -97,6 +109,10 @@
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;filter:none;transition:none}}
 
   main{position:relative;z-index:2;padding:14px 0 70px}
+  .step-h{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(24px,3.4vw,34px);letter-spacing:-.02em;
+    margin:0 0 18px;padding-top:14px}
+  .step-h::before{content:"";display:block;width:40px;height:3px;border-radius:3px;background:var(--brand);
+    margin-bottom:16px;opacity:.9}
   .surface{background:linear-gradient(180deg,var(--surface),var(--bg-2));border:1px solid var(--hair);
     border-radius:var(--radius);box-shadow:var(--shadow)}
 
@@ -222,10 +238,21 @@
       <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 4h9l3 3v13H8z"/><path d="M4 8v12h11"/></svg><span data-i18n="p2">Every answer cited to your notice.</span></span>
       <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg><span data-i18n="p3">Not legal advice. Points to free help.</span></span>
     </div>
+    <div class="hero-cta reveal">
+      <button class="btn primary" onclick="goToIntake()">
+        <span data-i18n="cta">Check my notice</span>
+        <span class="chev" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
+      </button>
+    </div>
+    <button class="scrollcue" onclick="goToIntake()" aria-label="Scroll down to paste your notice">
+      <span class="mouse" aria-hidden="true"></span>
+      <span data-i18n="scroll">Scroll to start</span>
+    </button>
   </div>
 </header>
 
 <main class="wrap">
+  <h2 class="step-h reveal" data-i18n="steph">Paste your notice</h2>
   <section class="surface intake reveal" id="intake" aria-labelledby="intake-h">
     <label class="lab" id="intake-h" for="notice" data-i18n="paste">Paste the text of your eviction notice</label>
     <textarea id="notice" aria-describedby="intake-hint" placeholder="Paste the notice text here, or try the sample."></textarea>
@@ -306,7 +333,7 @@ const I18N = {
       sub:'Paste the eviction notice you received. DueDate shows the one deadline, exactly what to do before it, and your rights, in plain language and grounded in your own paper. It never invents anything your notice does not say.',
       p1:'No account. Nothing is stored.',p2:'Every answer cited to your notice.',p3:'Not legal advice. Points to free help.',
       paste:'Paste the text of your eviction notice',analyze:'Explain my notice',sample:'Try a sample notice',
-      hint:'For the demo, click Try a sample notice. Your text is analyzed and not saved.',
+      hint:'For the demo, click Try a sample notice. Your text is analyzed and not saved.',cta:'Check my notice',scroll:'Scroll to start',steph:'Paste your notice',
       keydate:'Your key deadline',todo:'What to do',rights:'Your rights, as stated',
       notsay:'What your notice does NOT say',notsaywhy:'We will not guess these. Please confirm them with free legal help below.',
       freehelp:'Free help near you',yournotice:'Your notice (cited lines are highlighted)',
@@ -315,7 +342,7 @@ const I18N = {
       sub:'Pegue el aviso de desalojo que recibió. DueDate le muestra la fecha límite, qué hacer antes de ella y sus derechos, en lenguaje claro y basado en su propio documento. Nunca inventa nada que su aviso no diga.',
       p1:'Sin cuenta. No se guarda nada.',p2:'Cada respuesta citada a su aviso.',p3:'No es asesoría legal. Le indica ayuda gratuita.',
       paste:'Pegue el texto de su aviso de desalojo',analyze:'Explicar mi aviso',sample:'Probar un aviso de ejemplo',
-      hint:'Para la demostración, pulse Probar un aviso de ejemplo. Su texto se analiza y no se guarda.',
+      hint:'Para la demostración, pulse Probar un aviso de ejemplo. Su texto se analiza y no se guarda.',cta:'Revisar mi aviso',scroll:'Desplácese para empezar',steph:'Pegue su aviso',
       keydate:'Su fecha límite clave',todo:'Qué hacer',rights:'Sus derechos, según se indica',
       notsay:'Lo que su aviso NO dice',notsaywhy:'No lo adivinaremos. Confírmelo con ayuda legal gratuita abajo.',
       freehelp:'Ayuda gratuita cerca de usted',yournotice:'Su aviso (las líneas citadas están resaltadas)',
@@ -341,6 +368,7 @@ function setLang(l){
   if(document.getElementById('results').classList.contains('show')) analyze();
 }
 function loadSample(){const n=document.getElementById('notice');n.value=SAMPLE;n.focus();}
+function goToIntake(){document.getElementById('intake').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>document.getElementById('notice').focus(),500);}
 
 function fmtDate(iso){
   if(!iso||!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso||'';
